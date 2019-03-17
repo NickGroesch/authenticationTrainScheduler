@@ -27,8 +27,8 @@ $(document).ready(function() {
         return true;
       }
     },
-    signInSuccessUrl:
-      "https://nickgroesch.github.io/authenticationTrainScheduler/",
+    signInSuccessUrl: "/#",
+    //"https://nickgroesch.github.io/authenticationTrainScheduler/",
     signInOptions: [
       // Leave the lines as is for the providers you want to offer your users.
       firebase.auth.GoogleAuthProvider.PROVIDER_ID,
