@@ -27,7 +27,7 @@ $(document).ready(function() {
         return true;
       }
     },
-    signInSuccessUrl: "authenticationTrainScheduler/#",
+    signInSuccessUrl: "/authenticationTrainScheduler/#",
     //"https://nickgroesch.github.io/authenticationTrainScheduler/",
     signInOptions: [
       // Leave the lines as is for the providers you want to offer your users.
@@ -48,6 +48,15 @@ $(document).ready(function() {
   // The start method will wait until the DOM is loaded.
   ui.start("#firebaseui-auth-container", uiConfig);
   // WORKING ON USER AUTHENTICATION~^^
+
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      // User is signed in.
+      console.log(user);
+    } else {
+      // No user is signed in.
+    }
+  });
 
   //   Thanks to tutor Brian Ngobidi for walking me through the global flags and firebase reference keys required for the (update details /remove train) functionality
   //   global flag to handle whether train is being updated or pushed
