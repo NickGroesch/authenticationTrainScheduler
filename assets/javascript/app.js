@@ -13,6 +13,20 @@ $(document).ready(function() {
 
   // WORKING ON USER AUTHENTICATION~vv
   uiConfig = {
+    callbacks: {
+      signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+        var user = authResult.user;
+        var credential = authResult.credential;
+        var isNewUser = authResult.additionalUserInfo.isNewUser;
+        var providerId = authResult.additionalUserInfo.providerId;
+        var operationType = authResult.operationType;
+        console.log(user);
+        // Do something with the returned AuthResult.
+        // Return type determines whether we continue the redirect automatically
+        // or whether we leave that to developer to handle.
+        return true;
+      }
+    },
     signInSuccessUrl:
       "https://nickgroesch.github.io/authenticationTrainScheduler/",
     signInOptions: [
