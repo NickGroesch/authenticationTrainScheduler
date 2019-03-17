@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Train Scheduler</title>
+    <link rel="stylesheet" href="./assets/css/reset.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"
+    />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="card">
+        <div class="card-header">
+          Train Schedule
+        </div>
+        <div class="card-body">
+          <div class="container">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Train Name</th>
+                  <th scope="col">Destination</th>
+                  <th scope="col">Frequency</th>
+                  <th scope="col">Next Arrival</th>
+                  <th scope="col">Minutes Away</th>
+                  <th scope="col">Track</th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+
+              <tbody id="trainList"></tbody>
+            </table>
+          </div>
+          <h6 id="now"></h6>
+        </div>
+      </div>
+
+      <div class="card">
+        <div id="firebaseui-auth-container"></div>
+        <div class="card-header">
+          Admin: Add a Train
+        </div>
+        <div class="card-body">
+          <div class="container">
+            <form>
+              <div class="form-group row">
+                <label for="trainName" class="col-sm-2 col-form-label"
+                  >Train Name</label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="trainName"
+                    placeholder="e.g. Bob or Tom"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="destination" class="col-sm-2 col-form-label"
+                  >Destination</label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="destination"
+                    placeholder="e.g. Bobsburg or Tomtopia"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="firstTrain" class="col-sm-2 col-form-label"
+                  >First Train Time</label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="firstTrain"
+                    placeholder="HH:mm in Military Time"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="arrivalFrequency" class="col-sm-2 col-form-label"
+                  >Frequency</label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="arrivalFrequency"
+                    placeholder="In minutes"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-10">
+                  <button class="btn btn-primary" id="makeItSo">
+                    Make it so
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
+    <script src="./assets/javascript/app.js"></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+  </body>
+</html>
