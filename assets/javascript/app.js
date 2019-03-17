@@ -27,7 +27,7 @@ $(document).ready(function() {
         return true;
       }
     },
-    signInSuccessUrl: "/#",
+    signInSuccessUrl: "authenticationTrainScheduler/#",
     //"https://nickgroesch.github.io/authenticationTrainScheduler/",
     signInOptions: [
       // Leave the lines as is for the providers you want to offer your users.
