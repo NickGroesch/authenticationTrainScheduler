@@ -55,18 +55,14 @@ $(document).ready(function() {
         .append(
           $("<td>").append(
             $(
-              `<button class="update" data-key="${
-                snap.key
-              }" data-name="${name}" data-destination="${destination}" data-tripFrequency="${tripFrequency}" data-initialTrip="${initialTrip}">`
+              `<button class="update" data-key="${snapkey}" data-name="${name}" data-destination="${destination}" data-tripFrequency="${tripFrequency}" data-initialTrip="${initialTrip}">`
             ).text("Update")
           )
         )
         .append(
           $("<td>").append(
             $(
-              `<button class="remove" id="remove${name}" data-key="${
-                snap.key
-              }">`
+              `<button class="remove" id="remove${name}" data-key="${snapkey}">`
             ).text("Remove")
           )
         );
@@ -74,6 +70,7 @@ $(document).ready(function() {
     $("#trainList").append(postTrain);
   }
   function trainMath(snap) {
+    let snapkey = snap.key;
     let name = snap.val().name;
     let destination = snap.val().destination;
     let initialTrip = snap.val().initialTrip;
@@ -98,7 +95,8 @@ $(document).ready(function() {
       track,
       nextArrival,
       minutesAway,
-      tripFrequency
+      tripFrequency,
+      snapkey
     };
   }
 
