@@ -123,10 +123,10 @@ $(document).ready(function() {
   });
   function updateTime() {
     $("#trainList").empty();
-    dB.ref("trainTime/").on("child_added", function(snapshot) {
+    dB.ref("trainTime/").on("child_added", function(snap) {
       // console.log(snapshot.val());
 
-      let trainObject = trainMath(snapshot);
+      let trainObject = trainMath(snap);
       // dynamically generate html
       renderTable(trainObject);
     });
