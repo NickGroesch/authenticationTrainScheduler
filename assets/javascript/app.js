@@ -41,68 +41,93 @@ $(document).ready(function() {
       updateTime();
     }
   });
+  function renderTable(object) {
+    let postTrain = $("<tr>")
+      .append($("<td>").text(object.name))
+      .append($("<td>").text(object.destination))
+      .append($("<td>").text(object.tripFrequency))
+      .append($("<td>").text(object.nextArrival))
+      .append($("<td>").text(object.minutesAway))
+      .append($("<td>").text(object.track));
+    if (userAuth) {
+      postTrain
+        .append(
+          $("<td>").append(
+            $(
+              `<button class="update" data-key="${
+                snap.key
+              }" data-name="${name}" data-destination="${destination}" data-tripFrequency="${tripFrequency}" data-initialTrip="${initialTrip}">`
+            ).text("Update")
+          )
+        )
+        .append(
+          $("<td>").append(
+            $(
+              `<button class="remove" id="remove${name}" data-key="${
+                snap.key
+              }">`
+            ).text("Remove")
+          )
+        );
+    }
+    $("#trainList").append(postTrain);
+  }
+  function trainMath(snap) {
+    let name = snap.val().name;
+    let destination = snap.val().destination;
+    let initialTrip = snap.val().initialTrip;
+    let tripFrequency = snap.val().tripFrequency;
+    let track = snap.val().track;
+    // do the math for display
+    let now = moment().format("h:mm a");
+    $("#now").text(`The time is now ${now}`);
+    let initialTripPastTense = moment(initialTrip, "HH:mm").subtract(
+      1,
+      "years"
+    );
+    let deltaTime = moment().diff(moment(initialTripPastTense), "minutes");
+    let moduloTime = deltaTime % tripFrequency;
+    let minutesAway = tripFrequency - moduloTime;
+    let nextArrival = moment()
+      .add(minutesAway, "minutes")
+      .format("h:mm a");
+    return {
+      name,
+      destination,
+      track,
+      nextArrival,
+      minutesAway,
+      tripFrequency
+    };
+  }
 
   //   Thanks to tutor Brian Ngobidi for walking me through the global flags and firebase reference keys required for the (update details /remove train) functionality
   //   global flag to handle whether train is being updated or pushed
   var updateEntry = false;
   //   global flag to handle firebase key for train updates or removal
   var updateTrainId;
+  let tableRows;
   // update time (and therefore everything) every 10 seconds, as well as on page load and submit
-  updateTime();
+  // updateTime();
   let updateinterval = setInterval(updateTime, 10000);
+  dB.ref("trainTime/").on("child_added", function(snap) {
+    // tableRows.push(snap);
+    // console.log(tableRows);
+
+    // get the data from the database
+    let trainObject = trainMath(snap);
+    // dynamically generate html
+    renderTable(trainObject);
+    // render train table function
+  });
   function updateTime() {
     $("#trainList").empty();
-    dB.ref("trainTime/").on("child_added", function(snap) {
-      // get the data from the database
+    dB.ref("trainTime/").on("child_added", function(snapshot) {
+      // console.log(snapshot.val());
 
-      let name = snap.val().name;
-      let destination = snap.val().destination;
-      let initialTrip = snap.val().initialTrip;
-      let tripFrequency = snap.val().tripFrequency;
-      let track = snap.val().track;
-      // do the math for display
-      let now = moment().format("h:mm a");
-      $("#now").text(`The time is now ${now}`);
-      let initialTripPastTense = moment(initialTrip, "HH:mm").subtract(
-        1,
-        "years"
-      );
-      let deltaTime = moment().diff(moment(initialTripPastTense), "minutes");
-      let moduloTime = deltaTime % tripFrequency;
-      let minutesAway = tripFrequency - moduloTime;
-      let nextArrival = moment()
-        .add(minutesAway, "minutes")
-        .format("h:mm a");
+      let trainObject = trainMath(snapshot);
       // dynamically generate html
-      let postTrain = $("<tr>")
-        .append($("<td>").text(name))
-        .append($("<td>").text(destination))
-        .append($("<td>").text(tripFrequency))
-        .append($("<td>").text(nextArrival))
-        .append($("<td>").text(minutesAway))
-        .append($("<td>").text(track));
-      if (userAuth) {
-        postTrain
-          .append(
-            $("<td>").append(
-              $(
-                `<button class="update" data-key="${
-                  snap.key
-                }" data-name="${name}" data-destination="${destination}" data-tripFrequency="${tripFrequency}" data-initialTrip="${initialTrip}">`
-              ).text("Update")
-            )
-          )
-          .append(
-            $("<td>").append(
-              $(
-                `<button class="remove" id="remove${name}" data-key="${
-                  snap.key
-                }">`
-              ).text("Remove")
-            )
-          );
-      }
-      $("#trainList").append(postTrain);
+      renderTable(trainObject);
     });
   }
   //update trains
