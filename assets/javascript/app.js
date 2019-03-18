@@ -48,10 +48,12 @@ $(document).ready(function() {
   // The start method will wait until the DOM is loaded.
   ui.start("#firebaseui-auth-container", uiConfig);
   // WORKING ON USER AUTHENTICATION~^^
+  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
 
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-      // User is signed in.
+      $(".hidden").removeClass("hidden");
+      $(".auth").addClass("hidden");
       console.log(user);
     } else {
       // No user is signed in.
@@ -98,22 +100,26 @@ $(document).ready(function() {
         .append($("<td>").text(minutesAway))
         .append($("<td>").text(track))
         .append(
-          $("<td>").append(
-            $(
-              `<button class="update" data-key="${
-                snap.key
-              }" data-name="${name}" data-destination="${destination}" data-tripFrequency="${tripFrequency}" data-initialTrip="${initialTrip}">`
-            ).text("Update")
-          )
+          $("<td>")
+            .addClass("hidden")
+            .append(
+              $(
+                `<button class="update" data-key="${
+                  snap.key
+                }" data-name="${name}" data-destination="${destination}" data-tripFrequency="${tripFrequency}" data-initialTrip="${initialTrip}">`
+              ).text("Update")
+            )
         )
         .append(
-          $("<td>").append(
-            $(
-              `<button class="remove" id="remove${name}" data-key="${
-                snap.key
-              }">`
-            ).text("Remove")
-          )
+          $("<td>")
+            .addClass("hidden")
+            .append(
+              $(
+                `<button class="remove" id="remove${name}" data-key="${
+                  snap.key
+                }">`
+              ).text("Remove")
+            )
         );
       $("#trainList").append(postTrain);
     });
