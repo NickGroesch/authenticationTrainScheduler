@@ -11,50 +11,32 @@ $(document).ready(function() {
   firebase.initializeApp(config);
   var dB = firebase.database();
 
-  // WORKING ON USER AUTHENTICATION~vv
+  // initialize the user authentication functions
   uiConfig = {
     callbacks: {
       signInSuccessWithAuthResult: function(authResult, redirectUrl) {
-        var user = authResult.user;
-        var credential = authResult.credential;
-        var isNewUser = authResult.additionalUserInfo.isNewUser;
-        var providerId = authResult.additionalUserInfo.providerId;
-        var operationType = authResult.operationType;
-        console.log(user);
-        // Do something with the returned AuthResult.
-        // Return type determines whether we continue the redirect automatically
-        // or whether we leave that to developer to handle.
         return true;
       }
     },
     signInSuccessUrl: "/authenticationTrainScheduler/#",
-    //"https://nickgroesch.github.io/authenticationTrainScheduler/",
     signInOptions: [
-      // Leave the lines as is for the providers you want to offer your users.
       firebase.auth.GoogleAuthProvider.PROVIDER_ID,
       firebase.auth.GithubAuthProvider.PROVIDER_ID
     ],
-    signInFlow: "popup",
-    // tosUrl and privacyPolicyUrl accept either url string or a callback
-    // function.
-    // Terms of service url/callback.
-    tosUrl: "<your-tos-url>",
-    // Privacy policy url/callback.
-    privacyPolicyUrl: function() {
-      window.location.assign("<your-privacy-policy-url>");
-    }
+    signInFlow: "popup"
   };
   var ui = new firebaseui.auth.AuthUI(firebase.auth());
-  // The start method will wait until the DOM is loaded.
   ui.start("#firebaseui-auth-container", uiConfig);
-  // WORKING ON USER AUTHENTICATION~^^
+  // prevents users from staying logged in through local storage, but allows refreshes of page (.NONE would be most secure, but also annoying)
   firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
-
+  // global flag for user signed-in to display admin buttons
+  let userAuth = false;
+  // if user is authenticated then they can see admin functions
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       $(".hidden").removeClass("hidden");
       $(".auth").addClass("hidden");
-      console.log(user);
+      userAuth = true;
     } else {
       // No user is signed in.
     }
@@ -98,29 +80,28 @@ $(document).ready(function() {
         .append($("<td>").text(tripFrequency))
         .append($("<td>").text(nextArrival))
         .append($("<td>").text(minutesAway))
-        .append($("<td>").text(track))
-        .append(
-          $("<td>")
-            // .addClass("hidden")
-            .append(
+        .append($("<td>").text(track));
+      if (userAuth) {
+        postTrain
+          .append(
+            $("<td>").append(
               $(
                 `<button class="update" data-key="${
                   snap.key
                 }" data-name="${name}" data-destination="${destination}" data-tripFrequency="${tripFrequency}" data-initialTrip="${initialTrip}">`
               ).text("Update")
             )
-        )
-        .append(
-          $("<td>")
-            // .addClass("hidden")
-            .append(
+          )
+          .append(
+            $("<td>").append(
               $(
                 `<button class="remove" id="remove${name}" data-key="${
                   snap.key
                 }">`
               ).text("Remove")
             )
-        );
+          );
+      }
       $("#trainList").append(postTrain);
     });
   }
