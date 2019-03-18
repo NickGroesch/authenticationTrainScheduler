@@ -55,14 +55,20 @@ $(document).ready(function() {
         .append(
           $("<td>").append(
             $(
-              `<button class="update" data-key="${snapkey}" data-name="${name}" data-destination="${destination}" data-tripFrequency="${tripFrequency}" data-initialTrip="${initialTrip}">`
+              `<button class="update" data-key="${object.snapkey}" data-name="${
+                object.name
+              }" data-destination="${object.destination}" data-tripFrequency="${
+                object.tripFrequency
+              }" data-initialTrip="${object.initialTrip}">`
             ).text("Update")
           )
         )
         .append(
           $("<td>").append(
             $(
-              `<button class="remove" id="remove${name}" data-key="${snapkey}">`
+              `<button class="remove" id="remove${object.name}" data-key="${
+                object.snapkey
+              }">`
             ).text("Remove")
           )
         );
