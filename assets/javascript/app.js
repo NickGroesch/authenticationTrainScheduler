@@ -18,17 +18,19 @@ $(document).ready(function() {
         return true;
       }
     },
-    signInSuccessUrl: "/authenticationTrainScheduler/#",
+    signInSuccessUrl:
+      "https://nickgroesch.github.io/authenticationTrainScheduler/#",
     signInOptions: [
       firebase.auth.GoogleAuthProvider.PROVIDER_ID,
       firebase.auth.GithubAuthProvider.PROVIDER_ID
     ],
+    // page redirect was a little "fuzzy" compared to popup
     signInFlow: "popup"
   };
   var ui = new firebaseui.auth.AuthUI(firebase.auth());
   ui.start("#firebaseui-auth-container", uiConfig);
-  // prevents users from staying logged in through local storage, but allows refreshes of page (.NONE would be most secure, but also annoying)
-  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+  // .LOCAL and .SESSION storage of user authentication made a bug where on page load the trains printed twice for first ten seconds so lets try .NONE
+  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
   // global flag for user signed-in to display admin buttons
   let userAuth = false;
   // if user is authenticated then they can see admin functions
@@ -38,8 +40,6 @@ $(document).ready(function() {
       $(".auth").addClass("hidden");
       userAuth = true;
       updateTime();
-    } else {
-      // No user is signed in.
     }
   });
 
