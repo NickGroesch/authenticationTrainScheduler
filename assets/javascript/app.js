@@ -101,7 +101,7 @@ $(document).ready(function() {
         .append($("<td>").text(track))
         .append(
           $("<td>")
-            .addClass("hidden")
+            // .addClass("hidden")
             .append(
               $(
                 `<button class="update" data-key="${
@@ -112,7 +112,7 @@ $(document).ready(function() {
         )
         .append(
           $("<td>")
-            .addClass("hidden")
+            // .addClass("hidden")
             .append(
               $(
                 `<button class="remove" id="remove${name}" data-key="${
