@@ -18,7 +18,8 @@ $(document).ready(function() {
         return true;
       }
     },
-    signInSuccessUrl: "./authenticationTrainScheduler",
+    signInSuccessUrl:
+      "https://nickgroesch.github.io/authenticationTrainScheduler",
     signInOptions: [
       firebase.auth.GoogleAuthProvider.PROVIDER_ID
       // firebase.auth.GithubAuthProvider.PROVIDER_ID
