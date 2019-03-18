@@ -18,11 +18,10 @@ $(document).ready(function() {
         return true;
       }
     },
-    signInSuccessUrl:
-      "https://nickgroesch.github.io/authenticationTrainScheduler",
+    signInSuccessUrl: "./authenticationTrainScheduler",
     signInOptions: [
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      firebase.auth.GithubAuthProvider.PROVIDER_ID
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID
+      // firebase.auth.GithubAuthProvider.PROVIDER_ID
     ],
     // page redirect was a little "fuzzy" compared to popup
     signInFlow: "popup"
