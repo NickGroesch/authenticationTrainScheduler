@@ -19,7 +19,7 @@ $(document).ready(function() {
       }
     },
     signInSuccessUrl:
-      "https://nickgroesch.github.io/authenticationTrainScheduler/#",
+      "https://nickgroesch.github.io/authenticationTrainScheduler",
     signInOptions: [
       firebase.auth.GoogleAuthProvider.PROVIDER_ID,
       firebase.auth.GithubAuthProvider.PROVIDER_ID
