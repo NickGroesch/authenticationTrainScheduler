@@ -30,7 +30,7 @@ $(document).ready(function() {
   var ui = new firebaseui.auth.AuthUI(firebase.auth());
   ui.start("#firebaseui-auth-container", uiConfig);
   // .LOCAL and .SESSION storage of user authentication made a bug where on page load the trains printed twice for first ten seconds so lets try .NONE
-  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
   // global flag for user signed-in to display admin buttons
   let userAuth = false;
   // if user is authenticated then they can see admin functions
