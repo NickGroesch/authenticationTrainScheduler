@@ -37,6 +37,7 @@ $(document).ready(function() {
       $(".hidden").removeClass("hidden");
       $(".auth").addClass("hidden");
       userAuth = true;
+      updateTime();
     } else {
       // No user is signed in.
     }
