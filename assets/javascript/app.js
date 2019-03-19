@@ -39,7 +39,7 @@ $(document).ready(function() {
       $(".hidden").removeClass("hidden");
       $(".auth").addClass("hidden");
       userAuth = true;
-      // updateTime();
+      updateTime();
     }
   });
   function renderTable(object) {
@@ -113,10 +113,9 @@ $(document).ready(function() {
   var updateTrainId;
   let tableRows;
   // update time (and therefore everything) every 10 seconds, as well as on page load and submit
-  // updateTime();
   let updateinterval = setInterval(updateTime, 10000);
+  // the listener comes on page load, the interval handles everything else with updateTime()
   dB.ref("trainTime/").on("child_added", function(snap) {
-    $("#trainList").empty();
     // get the data from the database
     let trainObject = trainMath(snap);
     // dynamically generate html
