@@ -116,9 +116,7 @@ $(document).ready(function() {
   // updateTime();
   let updateinterval = setInterval(updateTime, 10000);
   dB.ref("trainTime/").on("child_added", function(snap) {
-    // tableRows.push(snap);
-    // console.log(tableRows);
-
+    $("#trainList").empty();
     // get the data from the database
     let trainObject = trainMath(snap);
     // dynamically generate html
@@ -128,10 +126,7 @@ $(document).ready(function() {
   function updateTime() {
     $("#trainList").empty();
     dB.ref("trainTime/").on("child_added", function(snap) {
-      // console.log(snapshot.val());
-
       let trainObject = trainMath(snap);
-      // dynamically generate html
       renderTable(trainObject);
     });
   }
