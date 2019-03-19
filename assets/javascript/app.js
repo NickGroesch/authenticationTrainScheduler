@@ -39,7 +39,9 @@ $(document).ready(function() {
       $(".hidden").removeClass("hidden");
       $(".auth").addClass("hidden");
       userAuth = true;
+      clearInterval(updateinterval);
       updateTime();
+      updateinterval = setInterval(updateTime, 10000);
     }
   });
   function renderTable(object) {
